@@ -18,10 +18,12 @@ const e=window,t=e.ShadowRoot&&(void 0===e.ShadyCSS||e.ShadyCSS.nativeShadow)&&"
       </div>
     `:I``}async _initialLoad(){this._loaded=!0,await this.updateComplete,"pagination"in this._parameters&&(null===this._parameters.pagination&&(this._parameters.pagination={}),this._parameters.pagination.el=this.shadowRoot.querySelector(".swiper-pagination")),"navigation"in this._parameters&&(null===this._parameters.navigation&&(this._parameters.navigation={}),this._parameters.navigation.nextEl=this.shadowRoot.querySelector(".swiper-button-next"),this._parameters.navigation.prevEl=this.shadowRoot.querySelector(".swiper-button-prev")),"scrollbar"in this._parameters&&(null===this._parameters.scrollbar&&(this._parameters.scrollbar={}),this._parameters.scrollbar.el=this.shadowRoot.querySelector(".swiper-scrollbar")),"start_card"in this._config&&(this._parameters.initialSlide=this._config.start_card-1),this.swiper=new nt(this.shadowRoot.querySelector(".swiper-container"),this._parameters),this._config.reset_after&&this.swiper.on("slideChange",(()=>{this._setResetTimer()})).on("click",(()=>{this._setResetTimer()})).on("touchEnd",(()=>{this._setResetTimer()}))}_setResetTimer(){this._resetTimer&&window.clearTimeout(this._resetTimer),this._resetTimer=window.setTimeout((()=>{this.swiper.slideTo(this._parameters.initialSlide||0)}),1e3*this._config.reset_after)}async _createCards(){this._cardPromises=Promise.all(this._config.cards.map((e=>this._createCardElement(e)))),this._cards=await this._cardPromises,this._ro&&this._cards.forEach((e=>{this._ro.observe(e)})),this.swiper&&this.swiper.update()}
 	async _createCardElement(e, retries = 3) {
+		console.log('Attempting to create card element:', e);
 		let t;
 		
 		try {
 			t = (await Zt).createCardElement(e);
+			console.log('Card element created successfully:', t);
 		} catch (error) {
 			console.error('Failed to create card element:', error);
 			if (retries > 0) {
